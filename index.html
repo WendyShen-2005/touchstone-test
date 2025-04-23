@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myNinjaApp">
+  <head>
+    <title>TheNetNinja Angular Playlist</title>
+    <link href="content/css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="app/lib/angular.min.js"></script>
+    <script src="app/app.js"></script>
+  </head>
+  <body>
+    <!-- 'header' part is optional, just makes it more readable therefore good practice -->
+    <header ng-include src="'header.html'"></header>
+    <!-- binds input to favMeat, twoWay data binding because will update model and view and they can update us -->
+    <input type="text" ng-model="search" placeholder="enter name"/>
+    <div ng-controller="NinjaController">
+      <p ng-repeat="ninja in ninjas | orderBy:'-name' | filter: search">{{ninja.name}} - {{ninja.rate | currency: '.'}}</p>
+<!-- orderBy: varName, filter: (must contain value here), | = piping -->
+    </div>
+  </body>
+</html>
+<!-- directives:
+  thingies to tell angularjs what to do
+  or custom tags
+
+  ng-app: init angular
+  ng-init: init vars (not recommended)
+  ng-model: two way binding var (var name can be binded to inner text, class name, etc.)
+  ng-repeat: for loop (pass in: varName in array)
+-->
