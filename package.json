@@ -6,7 +6,8 @@
     "angular": "^1.8.2",
     "angular-material": "^1.2.5",
     "angular-messages": "^1.8.3",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "showdown": "^2.1.0"
   },
   "scripts": {
     "build": "tsc",

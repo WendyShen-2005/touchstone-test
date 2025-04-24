@@ -2,7 +2,6 @@ NOTES:
 - Since PrimeNG does not support AngularJs 1.x (only Angular 2+), I used Material UI instead
 
 HOW TO RUN AFTER CLONING THIS PROJECT:
-1) Run: tsc app/app.ts
-2) Run: npm install
-3) Run: node . (to start server)
-5) Open index.html in web browser
+1) Run: npm install
+2) Run: npm run dev (to backend server)
+3) Open index.html in web browser

@@ -1,72 +1,220 @@
 <div>
     application
-    <div>
+    <div style="display: flex; flex-direction: column;">
+        <h3>1) Personal Info</h3>
         <div>
-            <md-input-container>
-                <label>Immigration status</label>
-                <md-select ng-model="immgStat[0]">
-                    <md-option ng-repeat="eng in immgStat" value="{{eng}}">
-                        {{eng}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container>
-                <label>Medical Degree Completed</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
-            <md-input-container>
-                <label>English Proficiency</label>
-                <md-select ng-model="engProficiency[0]">
-                    <md-option ng-repeat="eng in engProficiency" value="{{eng}}">
-                        {{eng}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container>
-                <label>LMCC</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
+            <div>
+                <my-input 
+                    label="First name" 
+                    model="appInfo.personalInfo.firstName" 
+                    type="text"
+                    check-val="checkVal(val)"
+                    ></my-input>
+                <my-input 
+                    label="Last name" 
+                    model="appInfo.personalInfo.lastName" 
+                    type="text"
+                    check-val="checkVal(val)"
+                    ></my-input>
+            </div>
+            <my-input 
+                label="Email" 
+                model="appInfo.personalInfo.email" 
+                type="text"
+                check-val="checkVal(val)"
+                ></my-input>
+            <my-input 
+                label="Birthday" 
+                model="appInfo.personalInfo.birthday" 
+                type="date"
+                check-val="checkVal(val)"
+                ></my-input>
         </div>
-        <div>
-            <md-input-container>
-                <label>MCCQE, NAC, TDM</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
-            <md-input-container>
-                <label>Postgraduate Training & Independent Practice</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
-            <md-input-container>
-                <label>Demonstration of completion of seven core rotations</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
-            <md-input-container>
-                <label>Currency Of Practice (# hours)</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
-        </div>
-        <div>
-            <md-input-container>
-                <label>Valid Medical Identification Number for Canada (MINC)</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
-            <md-input-container>
-                <label>Valid Medical Council of Canada candidate code</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
-            <md-input-container>
-                <label>Valid Canadian or international drivers license</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
-            <md-input-container>
-                <label>No more than one previous practice ready assessment attempts in Canada</label>
-                <input type="text" ng-model="color" required="" md-maxlength="10">
-            </md-input-container>
+
+        <h3>2) Legal Status</h3>
+
+        <my-select
+            label="Immigration status"
+            model="appInfo.legalStat.legalStatus"
+            options="immgStat"
+            check-val="checkVal(val)"
+        ></my-select>
+
+        <div style="display: flex;">
+
+            <my-select
+                label="Do you have a drivers license?"
+                model="appInfo.legalStat.drivers.hasDrivers"
+                options="trueFalse"
+                check-val="checkVal(val)"
+            ></my-select>
             
-            <md-input-container>
-                <label>A current curriculum vitae following this format</label>
-                <input type="file" ng-model="color" required="">
-            </md-input-container>
+            <div ng-show="appInfo.legalStat.drivers.hasDrivers == 'true'">
+                <my-select
+                    label="What is your drivers license type?"
+                    model="appInfo.drivers.driversType"
+                    options="driversType"
+                    check-val="checkVal(val)"
+                ></my-select>
+                
+            </div>
+        </div>
+
+        <my-input 
+            label="Total practice hours" 
+            model="appInfo.legalStat.numPracticeHours" 
+            type="number"
+            check-val="checkVal(val)"
+            ></my-input>
+        
+        <!-- TODO: prev PRA -->
+        <h3>3) Previous & Current PRA attempts (TODO)</h3>
+        <div>
+            <div ng-repeat="i in appInfo.legalStat.prevPRAAttempts track by $index">
+                <my-select
+                    label="Written TDM"
+                    model="appInfo.legalStat.prevPRAAttempts[$index].written"
+                    options="trueFalse"
+                    check-val="checkVal(val)">
+                </my-select>
+                <my-select
+                    label="Passed?"
+                    model="appInfo.legalStat.prevPRAAttempts[$index].passed"
+                    options="trueFalse"
+                    check-val="checkVal(val)">
+                </my-select>
+                <my-select
+                    label="Current PRA?"
+                    model="appInfo.legalStat.prevPRAAttempts[$index].current"
+                    options="trueFalse"
+                    check-val="checkVal(val)">
+                </my-select>
+
+                <md-button ng-click="delPrevPRA($index)">Delete</md-button>
+            </div>
+            <md-button ng-click="addPrevPRA()">Add</md-button>
+        </div>
+
+        <h3>4) Medical Education</h3>
+        <div style="display: flex; flex-wrap: wrap;">
+            <my-input 
+                label="School Name" 
+                model="appInfo.medicalEd.school" 
+                type="text"
+                check-val="checkVal(val)"
+                ></my-input>
+            <my-input 
+                label="Medical Degree Name" 
+                model="appInfo.medicalEd.medDegreeName" 
+                type="text"
+                check-val="checkVal(val)"
+                ></my-input>
+            <my-input 
+                label="Graduation Year" 
+                model="appInfo.medicalEd.gradYr" 
+                type="number"
+                check-val="checkVal(val)"
+                ></my-input>
+            <my-input 
+                label="Education Language" 
+                model="appInfo.medicalEd.edLang" 
+                type="text"
+                check-val="checkVal(val)"
+                ></my-input>
+        </div>
+
+        <h3>5) English Proficiency</h3>
+        <div style="display: flex; flex-direction: column;">
+            <my-select
+                label="Proof of English Proficiency"
+                model="appInfo.engProficiency.test"
+                options="engTest"
+                check-val="checkVal(val)"
+            ></my-select>
+
+            <!-- will show if user took an english proficiency exam -->
+            <div style="display: flex;" ng-show="appInfo.engProficiency.test != null && appInfo.engProficiency.test != 'Recent practice in English speaking country'">
+                <my-input 
+                    label="Score" 
+                    model="appInfo.engProficiency.score" 
+                    type="number"
+                    check-val="checkVal(val)"
+                    ></my-input>
+                <my-select
+                    label="Test result expired"
+                    model="appInfo.engProficiency.expired"
+                    options="trueFalse"
+                    check-val="checkVal(val)"
+                ></my-select>
+            </div>
+
+            <!-- will show if user selected 'recent practice in english speeaking country' -->
+            <div ng-show="appInfo.engProficiency.test == 'Recent practice in English speaking country'">
+                <my-input
+                    label="Percentage of practice done in English (ex: 50% -> input 50)"
+                    model="appInfo.engProficiency.score"
+                    type="number"
+                    check-val="checkVal(val)"
+                ></my-input>
+            </div>
+
+            <!-- shows no matter what -->
+            <div ng-show="appInfo.engProficiency.test != null">
+                <my-select
+                    label="Do you actively use english?"
+                    model="appInfo.engProficiency.activeUse"
+                    options="trueFalse"
+                    check-val="checkVal(val)"
+                ></my-select>
+            </div>
+
+        </div>
+
+        <h3>6) Exams</h3>
+        <div>
+            <my-input
+                label="NAC Date"
+                model="appInfo.exams.NACDate"
+                type="date"
+                check-val="checkVal(val)"></my-input>
+            <my-input
+                label="MCCQE2 Date"
+                model="appInfo.exams.NACDate"
+                type="date"
+                check-val="checkVal(val)"></my-input>
+            <my-input
+                label="MCCQE1 Date"
+                model="appInfo.exams.NACDate"
+                type="date"
+                check-val="checkVal(val)"></my-input>
+        </div>
+
+        <h3>7) Post-grad training</h3>
+        <div>
+            <my-input
+                label="Months of post-grad training"
+                model="appInfo.postGradTraining.monthsPostGrad"
+                type="number"
+                check-val="checkVal(val)"></my-input>
+            <my-input
+                label="Months of independent training"
+                model="appInfo.postGradTraining.monthsIndependent"
+                type="number"
+                check-val="checkVal(val)"></my-input>
+        </div>
+
+        <h3>8) Rotations</h3>
+        <div>
+            <my-select
+                label="Completed 7 rotations?"
+                model="appInfo.rotations.completed7"
+                options="trueFalse"
+                check-val="checkVal(val)"></my-select>
+            <my-select
+                label="Do you have any impairments to ability to practice"
+                model="appInfo.rotations.impairment"
+                options="trueFalse"
+                check-val="checkVal(val)"></my-select>
         </div>
     </div>
 </div>
