@@ -1,20 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myNinjaApp">
+<html lang="en" ng-app="touchstoneTest">
   <head>
-    <title>TheNetNinja Angular Playlist</title>
-    <link href="content/css/styles.css" rel="stylesheet" type="text/css" />
+    <title>Touchstone Institute</title>
     <script src="app/lib/angular.min.js"></script>
+    <script src="app/lib/angular-route.min.js"></script>
+    
+    <!-- AngularJS Core -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <!-- AngularJS Modules Required by Angular Material -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+
+  <!-- Angular Material CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/angular-material@1.2.2/angular-material.min.css">
+
+  <!-- Angular Material JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/angular-material@1.2.2/angular-material.min.js"></script>
+
+
+
     <script src="app/app.js"></script>
   </head>
-  <body>
-    <!-- 'header' part is optional, just makes it more readable therefore good practice -->
-    <header ng-include src="'header.html'"></header>
-    <!-- binds input to favMeat, twoWay data binding because will update model and view and they can update us -->
-    <input type="text" ng-model="search" placeholder="enter name"/>
-    <div ng-controller="NinjaController">
-      <p ng-repeat="ninja in ninjas | orderBy:'-name' | filter: search">{{ninja.name}} - {{ninja.rate | currency: '.'}}</p>
-<!-- orderBy: varName, filter: (must contain value here), | = piping -->
-    </div>
+  <body ng-controller="touchstoneTestController">
+    <header ng-include="'header.html'"></header>
+    
+
+    <div>Hello</div>
+    <main ng-view></main>
   </body>
 </html>
 <!-- directives:
@@ -25,4 +39,10 @@
   ng-init: init vars (not recommended)
   ng-model: two way binding var (var name can be binded to inner text, class name, etc.)
   ng-repeat: for loop (pass in: varName in array)
+  ng-include: include another file
+  ng-show / ng-include: ex: ng-show: true will show element, else, will not 
+  ng-view
 -->
+
+  <!-- orderBy: varName, filter: (must contain value here), | = piping -->
+    <!-- binds input to favMeat, twoWay data binding because will update model and view and they can update us -->

@@ -1,0 +1,72 @@
+<div>
+    application
+    <div>
+        <div>
+            <md-input-container>
+                <label>Immigration status</label>
+                <md-select ng-model="immgStat[0]">
+                    <md-option ng-repeat="eng in immgStat" value="{{eng}}">
+                        {{eng}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container>
+                <label>Medical Degree Completed</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+            <md-input-container>
+                <label>English Proficiency</label>
+                <md-select ng-model="engProficiency[0]">
+                    <md-option ng-repeat="eng in engProficiency" value="{{eng}}">
+                        {{eng}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container>
+                <label>LMCC</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+        </div>
+        <div>
+            <md-input-container>
+                <label>MCCQE, NAC, TDM</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+            <md-input-container>
+                <label>Postgraduate Training & Independent Practice</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+            <md-input-container>
+                <label>Demonstration of completion of seven core rotations</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+            <md-input-container>
+                <label>Currency Of Practice (# hours)</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+        </div>
+        <div>
+            <md-input-container>
+                <label>Valid Medical Identification Number for Canada (MINC)</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+            <md-input-container>
+                <label>Valid Medical Council of Canada candidate code</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+            <md-input-container>
+                <label>Valid Canadian or international drivers license</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+            <md-input-container>
+                <label>No more than one previous practice ready assessment attempts in Canada</label>
+                <input type="text" ng-model="color" required="" md-maxlength="10">
+            </md-input-container>
+            
+            <md-input-container>
+                <label>A current curriculum vitae following this format</label>
+                <input type="file" ng-model="color" required="">
+            </md-input-container>
+        </div>
+    </div>
+</div>

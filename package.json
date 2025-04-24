@@ -1,5 +1,37 @@
 {
+  "engines": {
+    "node": ">=20.6.0"
+  },
   "dependencies": {
-    "angular": "^1.8.2"
-  }
+    "angular": "^1.8.2",
+    "angular-material": "^1.2.5",
+    "angular-messages": "^1.8.3",
+    "express": "^5.1.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "node --env-file=.env --watch -r ts-node/register index.ts"
+  },
+  "devDependencies": {
+    "@types/angular": "^1.8.9",
+    "@types/angular-route": "^1.7.6",
+    "@types/node": "^22.14.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "name": "touchstone-project",
+  "version": "1.0.0",
+  "description": "NOTES:\r - Since PrimeNG does not support AngularJs 1.x (only Angular 2+), I used Material UI instead",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WendyShen-2005/touchstone-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WendyShen-2005/touchstone-test/issues"
+  },
+  "homepage": "https://github.com/WendyShen-2005/touchstone-test#readme"
 }
