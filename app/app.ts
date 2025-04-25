@@ -85,6 +85,8 @@ touchstoneTest.config( ['$routeProvider', function($routeProvider: { when: (arg0
         }).when('/review/:id', {
             templateUrl: "views/reviewSpecApp.html",
             controller:'reviewAppController'
+        }).when('/submitted', {
+            templateUrl: "views/submissoinComplete.html",
         }).otherwise({
             redirectTo:'/application'
         });
@@ -120,7 +122,7 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function($scope
             redFlags:[],
             legalStatus:null,
             hasDrivers:null,
-            driversType:null,
+            driversType:false,
             numPracticeHours:null,
         },
         prevPRA: {
@@ -229,7 +231,8 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function($scope
             }
         });
         const myJson = await res.json();
-        console.log("Submission completed :)")
+        console.log("Submission completed :)");
+        window.location.href = window.location.href + "../submitted";
     }
 
 }]);
