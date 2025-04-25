@@ -74,13 +74,17 @@ var touchstoneTest = angular.module('touchstoneTest', [
     return {
         restrict: 'E',
         scope: {
-            flagData: '='
+            flagData: '=',
+            key: '@',
+            acknowledgeFunc: '&?',
+            overrideFunc: '&?'
         },
-        template: "<div ng-show=\"flag-data.length() != 0\">\n            <h3>Red flags</h3>\n            <div>\n                <div ng-repeat=\"flag in flagData\">\n                    <p>! {{flag.msg}}</p>\n                    <md-button>Aknowledge</md-button>\n                </div>\n            </div>\n        </div>"
+        template: "<div class=\"red-flag\" ng-show=\"flagData.length != 0\">\n            <h4>Red flags</h4>\n            <div>\n                <div class=\"flexWrap\" style=\"justify-content:space-between\" ng-repeat=\"flag in flagData track by $index\">\n                    <p>! {{flag.msg}}</p>\n                    <p>Acknowledged: {{flag.aknowledged}}</p>\n                    <md-button ng-click=\"acknowledgeFunc({key:key, index:$index})\">Acknowledged</md-button>\n                    <md-button ng-click=\"overrideFunc({key:key, index:$index})\">Dismiss</md-button>\n                </div>\n            </div>\n        </div>"
     };
 });
 //stuff that run before this is loaded/running
 touchstoneTest.config(['$routeProvider', function ($routeProvider) {
+        // client routes
         $routeProvider
             .when('/application', {
             templateUrl: "views/application.html",
@@ -95,103 +99,106 @@ touchstoneTest.config(['$routeProvider', function ($routeProvider) {
             redirectTo: '/application'
         });
     }]);
-touchstoneTest.run(function () {
-});
+// touchstoneTest.run(function(){
+// });
 //controls app data
 // square brackets + dependencies protects furing minification
+// application.html's controller
 touchstoneTest.controller('touchstoneTestController', ['$scope', function ($scope) {
         var _this = this;
-        //defines a var called message
-        //when message is called in view, will show hey y'all
-        //as long as message is called within the element scope
+        //verify data was update correctly
         $scope.checkVal = function (val) {
-            // check that data is updated correctly
             console.log(val);
             console.log($scope.appInfo);
         };
+        //   applicant data template that gets updated as client fills in info
         $scope.appInfo = {
             personalInfo: {
-                flags: [],
+                redFlags: [],
                 firstName: null,
                 lastName: null,
                 email: null,
                 birthday: null,
             },
             legalStat: {
-                flags: [],
+                redFlags: [],
                 legalStatus: null,
                 hasDrivers: null,
                 driversType: null,
                 numPracticeHours: null,
+            },
+            prevPRA: {
+                redFlags: [],
                 prevPRAAttempts: [],
             },
             //written TDM, result, is current?
             medicalEd: {
-                flags: [],
+                redFlags: [],
                 school: null,
                 medDegreeName: null,
                 gradYr: null,
                 edLang: null,
             },
             engProficiency: {
-                flags: [],
+                redFlags: [],
                 test: null,
                 score: null,
-                expired: null,
+                expired: false,
                 activeUse: null
             },
             exams: {
-                flags: [],
+                redFlags: [],
                 NACDate: null,
                 MCCQE2Date: null,
                 MCCQE1Date: null,
             },
             postGradTraining: {
-                flags: [],
+                redFlags: [],
                 monthsPostGrad: null,
                 monthsIndependent: null,
             },
             rotations: {
-                flags: [],
+                redFlags: [],
                 completed7: null,
                 impairment: null
             }
         };
+        // add PRA
         $scope.addPrevPRA = function () {
             $scope.checkVal(1);
             console.log("Added PRA");
-            $scope.appInfo.legalStat.prevPRAAttempts.push({
+            $scope.appInfo.prevPRA.prevPRAAttempts.push({
                 written: null,
                 passed: null,
                 current: null
             });
         };
+        // del PRA
         $scope.delPrevPRA = function (i) {
             $scope.checkVal(1);
             console.log("Deleted PRA");
-            $scope.appInfo.legalStat.prevPRAAttempts.splice(i, 1);
+            $scope.appInfo.prevPRA.prevPRAAttempts.splice(i, 1);
         };
-        $scope.engProficiency = [
-            "0 - No experience",
-            "1 - Beginner",
-            "2 - Conversational",
-            "3 - Professional Working Proficiency",
-            "4 - Fluent"
-        ];
+        //immigration status
         $scope.immgStat = [
             "Canadian Citizen / Permeaneant Resident",
             "Neither"
         ];
+        //true and false 
         $scope.trueFalse = [true, false];
+        // drivers license type
         $scope.driversType = [
             "Canadian",
             "International"
         ];
+        // english proficiency proof
         $scope.engTest = [
             "IELTS", "OET", "CELPIP", "Recent practice in English speaking country"
         ];
+        // for when user submits, this is updated to false when user submits an incomplete form
         $scope.allFieldsFilled = true;
         // backend calls
+        // submitting new application
         $scope.submitApp = function () { return __awaiter(_this, void 0, void 0, function () {
             var key, key2, res, myJson;
             return __generator(this, function (_a) {
@@ -225,16 +232,18 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function ($scop
                 }
             });
         }); };
-        // REVIEWERES CONTROLLER
     }]);
+// reviewer.html's controller
 touchstoneTest.controller('reviewerController', ['$scope', '$http', function ($scope, $http) {
         $scope.apps;
+        // get all applicants data
         $http.get('http://localhost:8080/allApps')
             .then(function (res) {
             $scope.apps = res.data;
             console.log($scope.apps);
         });
     }]);
+// reviewSpecApp.html's controller
 touchstoneTest.controller('reviewAppController', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
         var userId = $routeParams.id;
         $scope.appData;
@@ -243,4 +252,14 @@ touchstoneTest.controller('reviewAppController', ['$scope', '$http', '$routePara
             $scope.appData = res.data;
             console.log("Applicant data loaded.", $scope.appData);
         });
+        // acknowledge a flag
+        $scope.aknowFunc = function (key, index) {
+            console.log(key + " " + index);
+            $scope.appData[key].redFlags[index].aknowledged = true;
+            console.log($scope.appData[key]);
+        };
+        $scope.overrideFlag = function (key, index) {
+            console.log(key + " " + index);
+            $scope.appData[key].redFlags.splice(index, 1);
+        };
     }]);

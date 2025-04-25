@@ -1,7 +1,30 @@
-NOTES:
-- Since PrimeNG does not support AngularJs 1.x (only Angular 2+), I used Material UI instead
 
 HOW TO RUN AFTER CLONING THIS PROJECT:
 1) Run: npm install
 2) Run: npm run devStart (to start backend server)
 3) Open index.html in web browser
+
+NOTES:
+- Since PrimeNG does not support AngularJs 1.x (only Angular 2+), I used Material UI instead
+
+NEXT STEPS:
+- Implement more type safety with more interfaces
+- Add rest of the flags (some go into yellowFlag, others go into redFlag)
+- Search system to filter through applicants (search bar, filters, etc)
+
+MY APPROACH:
+As someone who had no prior experience with AngularJS, I used my knowledge of other frameworks/
+libraries to guide me in making high quality code. Similar to React, it is best to 'divide and
+conquer' by isolating tasks so it is easy to find bugs, reuse code, etc.
+
+I did find that AngularJS is much more explicit and strict with how code should be structured.
+This ensures developers follow MVC. In my case, my model is my 'db.json' database. My view is 
+my index.html, and all the other HTML files in views/, as well as all my custom directives in
+app.ts. And finally, my controllers are stored on app.ts/app.js and server.ts, as both act as a
+bridge between my model and view.
+
+As for how I specifically, implmented what I stated, above...
+
+1) Frontend: ensure use of custom directives and external HTML files as much as possible
+to avoid long, unreadable code
+2) Backend: ensure each request has a clear purpose via a clear route name, short, readable code

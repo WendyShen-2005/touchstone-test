@@ -4,128 +4,15 @@
       "accepted": false,
       "totalFlags": 100,
       "personalInfo": {
-        "flags": [],
+        "redFlags": [],
         "firstName": "Wendy",
         "lastName": "Shen",
         "email": "wendyshen2005@gmail.com",
         "birthday": "2005-12-05T05:00:00.000Z"
       },
       "legalStat": {
-        "flags": [],
-        "legalStatus": "Canadian Citizen / Permeaneant Resident",
-        "drivers": {
-          "hasDrivers": "true",
-          "driversType": "Canadian"
-        },
-        "numPracticeHours": 0,
-        "prevPRAAttempts": [
+        "redFlags": [
           {
-            "written": "false",
-            "passed": "false",
-            "current": "false"
-          }
-        ]
-      },
-      "medicalEd": {
-        "flags": [],
-        "school": "York University",
-        "medDegreeName": "Not medical :(",
-        "gradYr": 2027,
-        "edLang": "English"
-      },
-      "engProficiency": {
-        "flags": [],
-        "test": "Recent practice in English speaking country",
-        "score": 90,
-        "expired": null,
-        "exceeded": null,
-        "activeUse": "true"
-      },
-      "exams": {
-        "flags": [],
-        "NACDate": "2025-04-24T04:00:00.000Z",
-        "MCCQE2Date": "2025-04-09T04:00:00.000Z",
-        "MCCQE1Date": "2025-04-08T04:00:00.000Z"
-      },
-      "postGradTraining": {
-        "flags": [],
-        "monthsPostGrad": 0,
-        "monthsIndependent": 0,
-        "completed2Yr": null
-      },
-      "rotations": {
-        "flags": [],
-        "completed7": "false",
-        "impairment": "false"
-      }
-    },
-    {
-      "personalInfo": {
-        "flags": [],
-        "firstName": "ben",
-        "lastName": "benny",
-        "email": "ben123@gmail.com",
-        "birthday": "2025-04-10T04:00:00.000Z"
-      },
-      "legalStat": {
-        "flags": [],
-        "legalStatus": "Neither",
-        "hasDrivers": "true",
-        "driversType": "International",
-        "numPracticeHours": 86,
-        "prevPRAAttempts": [
-          {
-            "written": "true",
-            "passed": "true",
-            "current": "false"
-          }
-        ]
-      },
-      "medicalEd": {
-        "flags": [],
-        "school": "Queens University",
-        "medDegreeName": "BHSC",
-        "gradYr": 2029,
-        "edLang": "Chinese"
-      },
-      "engProficiency": {
-        "flags": [],
-        "test": "IELTS",
-        "score": 7,
-        "expired": "false",
-        "activeUse": "false"
-      },
-      "exams": {
-        "flags": [],
-        "NACDate": "2025-04-21T04:00:00.000Z",
-        "MCCQE2Date": "2025-04-10T04:00:00.000Z",
-        "MCCQE1Date": "2025-03-30T04:00:00.000Z"
-      },
-      "postGradTraining": {
-        "flags": [],
-        "monthsPostGrad": 9,
-        "monthsIndependent": 12
-      },
-      "rotations": {
-        "flags": [],
-        "completed7": "true",
-        "impairment": "false"
-      }
-    },
-    {
-      "accepted": false,
-      "totalFlags": 100,
-      "personalInfo": {
-        "flags": [],
-        "firstName": "Wendy",
-        "lastName": "Shen",
-        "email": "wendyshen2005@gmail.com",
-        "birthday": "2005-12-05T05:00:00.000Z"
-      },
-      "legalStat": {
-        "flags": [
-          {
-            "level": "red",
             "msg": "Number of practice hours is less than 720.",
             "aknowledged": false
           }
@@ -135,24 +22,37 @@
           "hasDrivers": "true",
           "driversType": "Canadian"
         },
-        "numPracticeHours": 0,
+        "numPracticeHours": 0
+      },
+      "prevPRA": {
+        "redFlags": [
+          {
+            "msg": "Applicant has never passed TDM",
+            "aknowledged": false
+          }
+        ],
         "prevPRAAttempts": [
           {
             "written": "false",
+            "passed": "false",
+            "current": "false"
+          },
+          {
+            "written": "true",
             "passed": "false",
             "current": "false"
           }
         ]
       },
       "medicalEd": {
-        "flags": [],
+        "redFlags": [],
         "school": "York University",
         "medDegreeName": "Not medical :(",
         "gradYr": 2027,
         "edLang": "English"
       },
       "engProficiency": {
-        "flags": [],
+        "redFlags": [],
         "test": "Recent practice in English speaking country",
         "score": 90,
         "expired": null,
@@ -160,19 +60,19 @@
         "activeUse": "true"
       },
       "exams": {
-        "flags": [],
+        "redFlags": [],
         "NACDate": "2025-04-24T04:00:00.000Z",
         "MCCQE2Date": "2025-04-09T04:00:00.000Z",
         "MCCQE1Date": "2025-04-08T04:00:00.000Z"
       },
       "postGradTraining": {
-        "flags": [],
+        "redFlags": [],
         "monthsPostGrad": 0,
         "monthsIndependent": 0,
         "completed2Yr": null
       },
       "rotations": {
-        "flags": [],
+        "redFlags": [],
         "completed7": "false",
         "impairment": "false"
       }

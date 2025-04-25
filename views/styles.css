@@ -1,5 +1,21 @@
 .page {
     padding: 20px;
+    margin-top: 50px;
+}
+.header {
+    margin-top: -50px;
+    background-color: rgb(208, 64, 64);
+    align-items: center;
+    color: white;
+    padding: 0 20px;
+    justify-content: space-between;
+    position: fixed;
+    width: calc(100% - 20px);
+    z-index: 1000;
+    box-shadow: rgba(86, 13, 13, 0.345) 1px 1px 5px;
+}
+.header > * > * {
+    color: white;
 }
 
 .flexWrap {
@@ -17,4 +33,11 @@
     width: 100%;
     border-bottom: 1px solid rgb(178, 178, 178);
     padding-bottom: 10px;
+}
+.red-flag {
+    background-color: rgb(224, 154, 154);
+    color: rgb(129, 0, 0);
+    padding: 5px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }

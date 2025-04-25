@@ -1,8 +1,25 @@
+<!-- 
+my-app-info: displays a specified label in bold above the data (ex: First name: Wendy) 
+    label: describes that the data is
+    data: data
+
+red-flags: displays red flags (major flags) and gives option to acknowledge or override each flag
+    flag-data: flag json data
+    key: what section of data has the flag
+    acknowledge-func: function to acknowledge this flag
+    override-func: same as above but to override & delete flag
+
+in the future: will add yellow-flags
+-->
+
 <div class="page">
+
+    <!-- go back to list of applicants instead of just looking at this applicant -->
     <a href="index.html#!/reviewer">
         <md-button>Back</md-button>
     </a>
     
+    <!-- displays personal info & flags -->
     <div class="spec-app-info-container">
         <h3>1) Personal info</h3>
         <div class="flexWrap">
@@ -23,9 +40,14 @@
                 data="appData.personalInfo.birthday"
             ></my-app-info>
         </div>
-        <red-flags flag-data="appData.personalInfo.flags"></red-flags>
+        <red-flags flag-data="appData.personalInfo.redFlags"
+            key="personalInfo"
+            acknowledge-func="aknowFunc(key, index)"
+            override-func="overrideFlag(key, index)"
+        ></red-flags>
     </div>
 
+    <!-- displays legal statuses & flags -->
     <div class="spec-app-info-container">
         <h3>2) Legal status</h3>
         <div class="flexWrap">
@@ -48,31 +70,48 @@
                 data="appData.legalStat.numPracticeHours"
             ></my-app-info>
         </div>
-        <red-flags flag-data="appData.legalStat.flags"></red-flags>
+        <red-flags flag-data="appData.legalStat.redFlags"
+            key="legalStat"
+            acknowledge-func="aknowFunc(key, index)"
+            override-func="overrideFlag(key, index)"
+        ></red-flags>
     </div>
 
+    <!-- prev & current PRA attempts & flags -->
     <div class="spec-app-info-container">
         <h3>3) Previous & current PRA attempts</h3>
-        <div class="spec-app-info-container" ng-repeat="attempt in appData.legalStat.prevPRAAttempts track by $index">
+
+        <!-- each individual attempt at PRA -->
+        <div class="spec-app-info-container" ng-repeat="attempt in appData.prevPRA.prevPRAAttempts track by $index">
             <p>PRA Attempt {{$index + 1}}:</p>
             <div class="flexWrap">
                 <my-app-info
                     label="Written TDM:"
-                    data="appData.legalStat.prevPRAAttempts[$index].written"
+                    data="appData.prevPRA.prevPRAAttempts[$index].written"
                 ></my-app-info>
-                <my-app-info
-                    label="Passed:"
-                    data="appData.legalStat.prevPRAAttempts[$index].passed"
-                ></my-app-info>
-                <my-app-info
-                    label="Current:"
-                    data="appData.legalStat.prevPRAAttempts[$index].current"
-                ></my-app-info>
+                <div ng-show="appData.prevPRA.prevPRAAttempts[$index].written == 'true'">
+                    <my-app-info
+                        label="Passed:"
+                        data="appData.prevPRA.prevPRAAttempts[$index].passed"
+                    ></my-app-info>
+                </div>
+                <div ng-show="appData.prevPRA.prevPRAAttempts[$index].passed == 'true'">
+                    <my-app-info
+                        label="Current:"
+                        data="appData.prevPRA.prevPRAAttempts[$index].current"
+                    ></my-app-info>
+                </div>
             </div>
         </div>
-        <red-flags flag-data="appData.legalStat.flags"></red-flags>
+
+        <red-flags flag-data="appData.prevPRA.redFlags"
+            key="prevPRA"
+            acknowledge-func="aknowFunc(key, index)"
+            override-func="overrideFlag(key, index)"
+        ></red-flags>
     </div>
 
+    <!-- medical education & flags -->
     <div class="spec-app-info-container">
         <h3>4) Medical education</h3>
         <div class="flexWrap">
@@ -93,9 +132,14 @@
                 data="appData.medicalEd.edLang"
             ></my-app-info>
         </div>
-        <red-flags flag-data="appData.medicalEd.flags"></red-flags>
+        <red-flags flag-data="appData.medicalEd.redFlags"
+            key="medicalEd"
+            acknowledge-func="aknowFunc(key, index)"
+            override-func="overrideFlag(key, index)"
+        ></red-flags>
     </div>
 
+    <!-- english proficiency & flags, only renders necessary info (ex: if the user did not select an exam, will not show expiry date) -->
     <div class="spec-app-info-container">
         <h3>5) English proficiency</h3>
         <div class="flexWrap">
@@ -124,9 +168,14 @@
                 data="appData.engProficiency.activeUse"
             ></my-app-info>
         </div>
-        <red-flags flag-data="appData.engProficiency.flags"></red-flags>
+        <red-flags flag-data="appData.engProficiency.redFlags"
+            key="engProficiency"
+            acknowledge-func="aknowFunc(key, index)"
+            override-func="overrideFlag(key, index)"
+        ></red-flags>
     </div>
 
+    <!-- exams & flags -->
     <div class="spec-app-info-container">
         <h3>6) Exams</h3>
         <div class="flexWrap">
@@ -143,9 +192,14 @@
                 data="appData.exams.MCCQE1Date"
             ></my-app-info>
         </div>
-        <red-flags flag-data="appData.exams.flags"></red-flags>
+        <red-flags flag-data="appData.exams.redFlags"
+            key="exams"
+            acknowledge-func="aknowFunc(key, index)"
+            override-func="overrideFlag(key, index)"
+        ></red-flags>
     </div>
 
+    <!-- postgrad training & flags -->
     <div class="spec-app-info-container">
         <h3>7) Post-grad training</h3>
         <div class="flexWrap">
@@ -158,9 +212,14 @@
                 data="appData.postGradTraining.monthsIndependent"
             ></my-app-info>
         </div>
-        <red-flags flag-data="appData.postGradTraining.flags"></red-flags>
+        <red-flags flag-data="appData.postGradTraining.redFlags"
+            key="postGradTraining"
+            acknowledge-func="aknowFunc(key, index)"
+            override-func="overrideFlag(key, index)"
+        ></red-flags>
     </div>
     
+    <!-- rotations & flags -->
     <div class="spec-app-info-container">
         <h3>8) Rotations</h3>
         <div class="flexWrap">
@@ -173,6 +232,10 @@
                 data="appData.rotations.impairment"
             ></my-app-info>
         </div>
-        <red-flags flag-data="appData.rotations.flags"></red-flags>
+        <red-flags flag-data="appData.rotations.redFlags"
+            key="rotations"
+            acknowledge-func="aknowFunc(key, index)"
+            override-func="overrideFlag(key, index)"
+        ></red-flags>
     </div>
 </div>

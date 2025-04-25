@@ -1,3 +1,19 @@
+<!-- 
+my-input: input field that can be text, number, date, etc.
+    label: text that tells user what to input
+    model: variable text field is bound to
+    type: type of input
+    check-val: console logs variable to ensure variable is being updated correctly
+my-select: dropdown 
+    label: same as above
+    model: same as above
+    options: selectable options
+    check-val: same as above
+
+in the future:
+- more validation (ex: email is an actual email)
+-->
+
 <div class="page">
     application
     <form style="display: flex; flex-direction: column;">
@@ -32,7 +48,6 @@
         </div>
 
         <h3>2) Legal Status</h3>
-
         <my-select
             label="Immigration status"
             model="appInfo.legalStat.legalStatus"
@@ -67,27 +82,32 @@
             check-val="checkVal(val)"
             ></my-input>
         
+            <!-- allows users to add and remove attempts -->
         <h3>3) Previous & Current PRA attempts</h3>
         <div>
-            <div ng-repeat="i in appInfo.legalStat.prevPRAAttempts track by $index">
+            <div class="flexWrap" ng-repeat="i in appInfo.prevPRA.prevPRAAttempts track by $index">
                 <my-select
                     label="Written TDM"
-                    model="appInfo.legalStat.prevPRAAttempts[$index].written"
+                    model="appInfo.prevPRA.prevPRAAttempts[$index].written"
                     options="trueFalse"
                     check-val="checkVal(val)">
                 </my-select>
-                <my-select
-                    label="Passed?"
-                    model="appInfo.legalStat.prevPRAAttempts[$index].passed"
-                    options="trueFalse"
-                    check-val="checkVal(val)">
-                </my-select>
-                <my-select
-                    label="Current PRA?"
-                    model="appInfo.legalStat.prevPRAAttempts[$index].current"
-                    options="trueFalse"
-                    check-val="checkVal(val)">
-                </my-select>
+                <div ng-show="appInfo.prevPRA.prevPRAAttempts[$index].written == 'true'">
+                    <my-select
+                        label="Passed?"
+                        model="appInfo.prevPRA.prevPRAAttempts[$index].passed"
+                        options="trueFalse"
+                        check-val="checkVal(val)">
+                    </my-select>
+                </div>
+                <div ng-show="appInfo.prevPRA.prevPRAAttempts[$index].passed == 'true'">
+                    <my-select
+                        label="Current PRA?"
+                        model="appInfo.prevPRA.prevPRAAttempts[$index].current"
+                        options="trueFalse"
+                        check-val="checkVal(val)">
+                    </my-select>
+                </div>
 
                 <md-button ng-click="delPrevPRA($index)">Delete</md-button>
             </div>
@@ -131,8 +151,8 @@
                 check-val="checkVal(val)"
             ></my-select>
 
-            <!-- will show if user took an english proficiency exam -->
-            <div style="display: flex;" ng-show="appInfo.engProficiency.test != null && appInfo.engProficiency.test != 'Recent practice in English speaking country'">
+            <!-- will show if user took an english proficiency exam (IELTS and CELPIP only) -->
+            <div style="display: flex;" ng-show="appInfo.engProficiency.test == 'IELTS' || appInfo.engProficiency.test == 'CELPIP'">
                 <my-input 
                     label="Score" 
                     model="appInfo.engProficiency.score" 
@@ -155,6 +175,21 @@
                     type="number"
                     check-val="checkVal(val)"
                 ></my-input>
+            </div>
+             <!-- will show if user selected 'OET' -->
+             <div ng-show="appInfo.engProficiency.test == 'OET'">
+                <my-input
+                    label="Grade"
+                    model="appInfo.engProficiency.score"
+                    type="text"
+                    check-val="checkVal(val)"
+                ></my-input>
+                <my-select
+                    label="Test result expired"
+                    model="appInfo.engProficiency.expired"
+                    options="trueFalse"
+                    check-val="checkVal(val)"
+                ></my-select>
             </div>
 
             <!-- shows no matter what -->
@@ -216,6 +251,7 @@
                 check-val="checkVal(val)"></my-select>
         </div>
 
+        <!-- red <p> only shows when user tries to submit an incomplete form -->
         <p style="color: red;" ng-hide="allFieldsFilled">Please fill in every field before submitting.</p>
         <md-button ng-click="submitApp()">Submit</md-button>
     </form>
