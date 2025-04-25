@@ -2,7 +2,7 @@
 HOW TO RUN AFTER CLONING THIS PROJECT:
 1) Run: npm install
 2) Run: npm run devStart (to start backend server)
-3) Open index.html in web browser
+3) Add LiveServer plugin and click the live server icon. (https://youtu.be/9kEOkw_LvGU?si=ZyztQeQfDQGuQEIV)
 
 NOTES:
 - Since PrimeNG does not support AngularJs 1.x (only Angular 2+), I used Material UI instead
