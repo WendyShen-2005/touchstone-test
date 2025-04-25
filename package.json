@@ -6,16 +6,21 @@
     "angular": "^1.8.2",
     "angular-material": "^1.2.5",
     "angular-messages": "^1.8.3",
+    "cores": "^0.8.5",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
+    "FileSync": "^1.0.1",
+    "lowdb": "^1.0.0",
     "showdown": "^2.1.0"
   },
   "scripts": {
     "build": "tsc",
-    "dev": "node --env-file=.env --watch -r ts-node/register index.ts"
+    "devStart": "nodemon src/server.js"
   },
   "devDependencies": {
     "@types/angular": "^1.8.9",
     "@types/angular-route": "^1.7.6",
+    "@types/express": "^5.0.1",
     "@types/node": "^22.14.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"

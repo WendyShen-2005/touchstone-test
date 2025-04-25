@@ -1,6 +1,6 @@
 <div>
     application
-    <div style="display: flex; flex-direction: column;">
+    <form style="display: flex; flex-direction: column; padding: 20px;">
         <h3>1) Personal Info</h3>
         <div>
             <div>
@@ -44,15 +44,15 @@
 
             <my-select
                 label="Do you have a drivers license?"
-                model="appInfo.legalStat.drivers.hasDrivers"
+                model="appInfo.legalStat.hasDrivers"
                 options="trueFalse"
                 check-val="checkVal(val)"
             ></my-select>
             
-            <div ng-show="appInfo.legalStat.drivers.hasDrivers == 'true'">
+            <div ng-show="appInfo.legalStat.hasDrivers == 'true'">
                 <my-select
                     label="What is your drivers license type?"
-                    model="appInfo.drivers.driversType"
+                    model="appInfo.legalStat.driversType"
                     options="driversType"
                     check-val="checkVal(val)"
                 ></my-select>
@@ -67,8 +67,7 @@
             check-val="checkVal(val)"
             ></my-input>
         
-        <!-- TODO: prev PRA -->
-        <h3>3) Previous & Current PRA attempts (TODO)</h3>
+        <h3>3) Previous & Current PRA attempts</h3>
         <div>
             <div ng-repeat="i in appInfo.legalStat.prevPRAAttempts track by $index">
                 <my-select
@@ -179,12 +178,12 @@
                 check-val="checkVal(val)"></my-input>
             <my-input
                 label="MCCQE2 Date"
-                model="appInfo.exams.NACDate"
+                model="appInfo.exams.MCCQE2Date"
                 type="date"
                 check-val="checkVal(val)"></my-input>
             <my-input
                 label="MCCQE1 Date"
-                model="appInfo.exams.NACDate"
+                model="appInfo.exams.MCCQE1Date"
                 type="date"
                 check-val="checkVal(val)"></my-input>
         </div>
@@ -216,5 +215,8 @@
                 options="trueFalse"
                 check-val="checkVal(val)"></my-select>
         </div>
-    </div>
+
+        <p style="color: red;" ng-hide="allFieldsFilled">Please fill in every field before submitting.</p>
+        <md-button ng-click="submitApp()">Submit</md-button>
+    </form>
 </div>

@@ -3,5 +3,5 @@ NOTES:
 
 HOW TO RUN AFTER CLONING THIS PROJECT:
 1) Run: npm install
-2) Run: npm run dev (to backend server)
+2) Run: npm run devStart (to start backend server)
 3) Open index.html in web browser

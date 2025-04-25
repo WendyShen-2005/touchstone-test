@@ -80,10 +80,8 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function($scope
         legalStat: {
             flags:[],
             legalStatus:null,
-            drivers : {
-             hasDrivers:null,
-             driversType:null,
-            },
+            hasDrivers:null,
+            driversType:null,
             numPracticeHours:null,
             prevPRAAttempts: [],
         },
@@ -100,7 +98,6 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function($scope
         test:null,
         score:null,
         expired:null,
-        exceeded:null,
         activeUse:null
        },
        exams:{
@@ -113,7 +110,6 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function($scope
         flags:[],
         monthsPostGrad:null,
         monthsIndependent:null,
-        completed2Yr:null
        },
        rotations:{
         flags:[],
@@ -157,5 +153,35 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function($scope
     $scope.engTest = [
         "IELTS", "OET", "CELPIP", "Recent practice in English speaking country"
     ]
+
+    $scope.allFieldsFilled = true;
+
+
+    // backend calls
+
+    $scope.submitApp = async () => {
+
+        // verify that all required fields are filled in
+        for(const key in $scope.appInfo) {
+            for(const key2 in $scope.appInfo[key]) {
+                console.log(key + " " + key2)
+                if($scope.appInfo[key][key2] == null) {
+                    console.log(key + "." + key2 + " not filled");
+                    $scope.allFieldsFilled = false;
+                    return;
+                }
+            }
+        }
+
+        const res = await fetch('http://localhost:8080/newApp', {
+            method:"POST",
+            body:(JSON.stringify($scope.appInfo)),
+            headers: {
+                'Content-Type':'application/json'
+            }
+        });
+        console.log("Submission completed :)")
+        const myJson = await res.json();
+    }
 
 }]);
