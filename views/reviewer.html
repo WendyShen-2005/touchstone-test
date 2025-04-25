@@ -1,3 +1,15 @@
-<div>
-    reviewer
+<div class="page">
+    <h3>Welcome to the Reviewer Portal!</h3>
+    <h4>Click on an applicant to review.</h4>
+
+    <div style="display: flex; flex-direction: column;">
+        <div ng-repeat="app in apps track by $index">
+            <a href="index.html#!/review/{{$index}}">
+                <md-button style="text-align: start;">
+                    {{$index + 1}}) {{app.personalInfo.lastName}}, {{app.personalInfo.firstName}}
+                </md-button>
+            </a>
+        </div>
+
+    </div>
 </div>

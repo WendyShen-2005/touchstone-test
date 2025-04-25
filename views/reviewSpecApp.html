@@ -1,0 +1,178 @@
+<div class="page">
+    <a href="index.html#!/reviewer">
+        <md-button>Back</md-button>
+    </a>
+    
+    <div class="spec-app-info-container">
+        <h3>1) Personal info</h3>
+        <div class="flexWrap">
+            <my-app-info
+                label="First name:"
+                data="appData.personalInfo.firstName"
+            ></my-app-info>
+            <my-app-info
+                label="Last name:"
+                data="appData.personalInfo.lastName"
+            ></my-app-info>
+            <my-app-info
+                label="Email:"
+                data="appData.personalInfo.email"
+            ></my-app-info>
+            <my-app-info
+                label="Birthday:"
+                data="appData.personalInfo.birthday"
+            ></my-app-info>
+        </div>
+        <red-flags flag-data="appData.personalInfo.flags"></red-flags>
+    </div>
+
+    <div class="spec-app-info-container">
+        <h3>2) Legal status</h3>
+        <div class="flexWrap">
+            <my-app-info
+                label="Immigration status:"
+                data="appData.legalStat.legalStatus"
+            ></my-app-info>
+            <my-app-info
+                label="Has drivers:"
+                data="appData.legalStat.hasDrivers == null ? 'None' : appData.legalStat.hasDrivers"
+            ></my-app-info>
+            <div ng-show="appData.legalStat.hasDrivers != null">
+                <my-app-info
+                    label="Drivers license type:"
+                    data="appData.legalStat.driversType"
+                ></my-app-info>
+            </div>
+            <my-app-info
+                label="Total practice hours:"
+                data="appData.legalStat.numPracticeHours"
+            ></my-app-info>
+        </div>
+        <red-flags flag-data="appData.legalStat.flags"></red-flags>
+    </div>
+
+    <div class="spec-app-info-container">
+        <h3>3) Previous & current PRA attempts</h3>
+        <div class="spec-app-info-container" ng-repeat="attempt in appData.legalStat.prevPRAAttempts track by $index">
+            <p>PRA Attempt {{$index + 1}}:</p>
+            <div class="flexWrap">
+                <my-app-info
+                    label="Written TDM:"
+                    data="appData.legalStat.prevPRAAttempts[$index].written"
+                ></my-app-info>
+                <my-app-info
+                    label="Passed:"
+                    data="appData.legalStat.prevPRAAttempts[$index].passed"
+                ></my-app-info>
+                <my-app-info
+                    label="Current:"
+                    data="appData.legalStat.prevPRAAttempts[$index].current"
+                ></my-app-info>
+            </div>
+        </div>
+        <red-flags flag-data="appData.legalStat.flags"></red-flags>
+    </div>
+
+    <div class="spec-app-info-container">
+        <h3>4) Medical education</h3>
+        <div class="flexWrap">
+            <my-app-info
+                label="School:"
+                data="appData.medicalEd.school"
+            ></my-app-info>
+            <my-app-info
+                label="Medical Degree Program Name:"
+                data="appData.medicalEd.medDegreeName"
+            ></my-app-info>
+            <my-app-info
+                label="Graduation Year:"
+                data="appData.medicalEd.gradYr"
+            ></my-app-info>
+            <my-app-info
+                label="Education Language:"
+                data="appData.medicalEd.edLang"
+            ></my-app-info>
+        </div>
+        <red-flags flag-data="appData.medicalEd.flags"></red-flags>
+    </div>
+
+    <div class="spec-app-info-container">
+        <h3>5) English proficiency</h3>
+        <div class="flexWrap">
+            <my-app-info
+                label="Proof of English language proficiency:"
+                data="appData.engProficiency.test"
+            ></my-app-info>
+            <div ng-show="appData.engProficiency.test == 'Recent practice in English speaking country'">
+                <my-app-info
+                    label="Percentage of usage:"
+                    data="appData.engProficiency.score"
+                ></my-app-info>
+            </div>
+            <div class="flexWrap" ng-show="appData.engProficiency.test != 'Recent practice in English speaking country'">
+                <my-app-info
+                    label="Score:"
+                    data="appData.engProficiency.score"
+                ></my-app-info>
+                <my-app-info
+                    label="Test score expired:"
+                    data="appData.engProficiency.expired"
+                ></my-app-info>
+            </div>
+            <my-app-info
+                label="Actively uses english:"
+                data="appData.engProficiency.activeUse"
+            ></my-app-info>
+        </div>
+        <red-flags flag-data="appData.engProficiency.flags"></red-flags>
+    </div>
+
+    <div class="spec-app-info-container">
+        <h3>6) Exams</h3>
+        <div class="flexWrap">
+            <my-app-info
+                label="NAC Date:"
+                data="appData.exams.NACDate"
+            ></my-app-info>
+            <my-app-info
+                label="MCCQE2 Date:"
+                data="appData.exams.MCCQE2Date"
+            ></my-app-info>
+            <my-app-info
+                label="MCCQE1 Date:"
+                data="appData.exams.MCCQE1Date"
+            ></my-app-info>
+        </div>
+        <red-flags flag-data="appData.exams.flags"></red-flags>
+    </div>
+
+    <div class="spec-app-info-container">
+        <h3>7) Post-grad training</h3>
+        <div class="flexWrap">
+            <my-app-info
+                label="# Months spent in post-grad training:"
+                data="appData.postGradTraining.monthsPostGrad"
+            ></my-app-info>
+            <my-app-info
+                label="# Months spent in independent training:"
+                data="appData.postGradTraining.monthsIndependent"
+            ></my-app-info>
+        </div>
+        <red-flags flag-data="appData.postGradTraining.flags"></red-flags>
+    </div>
+    
+    <div class="spec-app-info-container">
+        <h3>8) Rotations</h3>
+        <div class="flexWrap">
+            <my-app-info
+                label="Completed 7 rotations:"
+                data="appData.rotations.completed7"
+            ></my-app-info>
+            <my-app-info
+                label="Impairment in ability to practice:"
+                data="appData.rotations.impairment"
+            ></my-app-info>
+        </div>
+        <red-flags flag-data="appData.rotations.flags"></red-flags>
+    </div>
+</div>

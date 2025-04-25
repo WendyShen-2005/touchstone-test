@@ -36,10 +36,34 @@ app.get('/allApps', (req: any, res: any) => {
 //submitting new application
 app.post('/newApp', (req: any, res: any) => {
     console.log("New application!!! ", req.body);
-    const newApp = req.body;
+    var newApp = req.body;
+    newApp = flags(newApp);
     db.get("applicants").push(newApp).write();
 
     db.write();
 
     res.json({success:true})
 });
+
+const flags = (newA:JSON) => {
+
+    const newApp = JSON.parse(JSON.stringify(newA));
+
+    if(newApp.legalStat.numPracticeHours <720) {
+        newApp.legalStat.flags.push({
+            level:"red",
+            msg:"Number of practice hours is less than 720.",
+            aknowledged:false
+        })
+    }
+
+    return newApp;
+}
+
+app.get('/specApp/:id', (req:any, res:any) => {
+    const userId = parseInt(req.params.id);
+    console.log(userId);
+    const data = db.get('applicants').value()[userId];
+    console.log("User " + userId + " data loaded");
+    res.json(data);
+})

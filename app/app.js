@@ -61,6 +61,23 @@ var touchstoneTest = angular.module('touchstoneTest', [
         },
         template: "<md-input-container>\n                        <label>{{label}}</label>\n                        <md-select ng-model=\"model\" ng-change=\"checkVal({val:model})\">\n                            <md-option ng-repeat=\"opt in options\" value=\"{{opt}}\">\n                                {{opt}}\n                            </md-option>\n                        </md-select>\n                    </md-input-container>"
     };
+}).directive('myAppInfo', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            label: '@',
+            data: '='
+        },
+        template: "<div style=\"margin:0 20px\">\n                        <b>{{label}}</b>\n                        <p>{{data}}</p>\n                    </div>"
+    };
+}).directive('redFlags', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            flagData: '='
+        },
+        template: "<div ng-show=\"flag-data.length() != 0\">\n            <h3>Red flags</h3>\n            <div>\n                <div ng-repeat=\"flag in flagData\">\n                    <p>! {{flag.msg}}</p>\n                    <md-button>Aknowledge</md-button>\n                </div>\n            </div>\n        </div>"
+    };
 });
 //stuff that run before this is loaded/running
 touchstoneTest.config(['$routeProvider', function ($routeProvider) {
@@ -69,7 +86,11 @@ touchstoneTest.config(['$routeProvider', function ($routeProvider) {
             templateUrl: "views/application.html",
             controller: 'touchstoneTestController'
         }).when('/reviewer', {
-            templateUrl: "views/reviewer.html"
+            templateUrl: "views/reviewer.html",
+            controller: 'reviewerController'
+        }).when('/review/:id', {
+            templateUrl: "views/reviewSpecApp.html",
+            controller: 'reviewAppController'
         }).otherwise({
             redirectTo: '/application'
         });
@@ -196,12 +217,30 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function ($scop
                             })];
                     case 1:
                         res = _a.sent();
-                        console.log("Submission completed :)");
                         return [4 /*yield*/, res.json()];
                     case 2:
                         myJson = _a.sent();
+                        console.log("Submission completed :)");
                         return [2 /*return*/];
                 }
             });
         }); };
+        // REVIEWERES CONTROLLER
+    }]);
+touchstoneTest.controller('reviewerController', ['$scope', '$http', function ($scope, $http) {
+        $scope.apps;
+        $http.get('http://localhost:8080/allApps')
+            .then(function (res) {
+            $scope.apps = res.data;
+            console.log($scope.apps);
+        });
+    }]);
+touchstoneTest.controller('reviewAppController', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+        var userId = $routeParams.id;
+        $scope.appData;
+        $http.get("http://localhost:8080/specApp/".concat(userId))
+            .then(function (res) {
+            $scope.appData = res.data;
+            console.log("Applicant data loaded.", $scope.appData);
+        });
     }]);

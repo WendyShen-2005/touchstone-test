@@ -36,6 +36,34 @@ var touchstoneTest = angular.module('touchstoneTest', [
                         </md-select>
                     </md-input-container>`
     }
+}).directive('myAppInfo', function(){
+    return {
+        restrict:'E',
+        scope: {
+            label:'@',
+            data:'='
+        },
+        template:`<div style="margin:0 20px">
+                        <b>{{label}}</b>
+                        <p>{{data}}</p>
+                    </div>`
+    }
+}).directive('redFlags', function(){
+    return {
+        restrict:'E',
+        scope:{
+            flagData:'='
+        },
+        template:`<div ng-show="flagData.length() != 0">
+            <h3>Red flags</h3>
+            <div>
+                <div ng-repeat="flag in flagData">
+                    <p>! {{flag.msg}}</p>
+                    <md-button>Aknowledge</md-button>
+                </div>
+            </div>
+        </div>`
+    }
 });
 
 //stuff that run before this is loaded/running
@@ -46,7 +74,11 @@ touchstoneTest.config( ['$routeProvider', function($routeProvider: { when: (arg0
             templateUrl: "views/application.html",
             controller:'touchstoneTestController'
         }).when('/reviewer', {
-            templateUrl: "views/reviewer.html"
+            templateUrl: "views/reviewer.html",
+            controller:'reviewerController'
+        }).when('/review/:id', {
+            templateUrl: "views/reviewSpecApp.html",
+            controller:'reviewAppController'
         }).otherwise({
             redirectTo:'/application'
         });
@@ -60,6 +92,7 @@ touchstoneTest.run(function(){
 //controls app data
 // square brackets + dependencies protects furing minification
 touchstoneTest.controller('touchstoneTestController', ['$scope', function($scope){
+
     //defines a var called message
     //when message is called in view, will show hey y'all
     //as long as message is called within the element scope
@@ -180,8 +213,36 @@ touchstoneTest.controller('touchstoneTestController', ['$scope', function($scope
                 'Content-Type':'application/json'
             }
         });
-        console.log("Submission completed :)")
         const myJson = await res.json();
+        console.log("Submission completed :)")
     }
 
+    // REVIEWERES CONTROLLER
+
 }]);
+
+touchstoneTest.controller('reviewerController', ['$scope', '$http', function($scope, $http){
+    $scope.apps;
+
+    $http.get('http://localhost:8080/allApps')
+        .then(function(res:any) {
+            $scope.apps = res.data;
+            console.log($scope.apps)
+        })
+
+}])
+
+
+touchstoneTest.controller('reviewAppController', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+    const userId = $routeParams.id;
+    $scope.appData;
+
+    $http.get(`http://localhost:8080/specApp/${userId}`)
+        .then(function(res:any) {
+            $scope.appData = res.data;
+
+            console.log("Applicant data loaded.", $scope.appData)
+        })
+
+
+}])
